@@ -48,3 +48,71 @@ let cartTotal2 = products
   .reduce((acc, p) => acc + p.unitPrice, 0);
 
 console.log(cartTotal2);
+
+// Lesson - 3
+console.clear();
+
+// SPA
+// State Management
+// React, Angular, Vue - bunlar değişimi daha çok referansın değişmesiyle ele alırlar... referansı değiştirmemiz çok önemli
+
+let cart = [
+  { id: 1, productName: "Telefon", quantity: 3, unitPrice: 30000 },
+  { id: 2, productName: "Bardak", quantity: 2, unitPrice: 70 },
+  { id: 3, productName: "Kalem", quantity: 10, unitPrice: 50 },
+  { id: 4, productName: "Şarj Cihazı", quantity: 4, unitPrice: 235 },
+  { id: 5, productName: "Kitap", quantity: 33, unitPrice: 100 },
+  { id: 6, productName: "Pot", quantity: 10, unitPrice: 500 },
+];
+
+// map()
+console.log("<ul>");
+cart.map((product) => {
+  console.log(
+    `<li>${product.productName} : ${product.quantity * product.unitPrice}</li>`
+  );
+});
+console.log("</ul>");
+
+// filter()
+let quantityOver5 = cart.filter(
+  (product) => product.quantity > 5 && product.unitPrice >= 100
+);
+console.log(quantityOver5);
+
+// reduce() accumulator
+let total = cart.reduce(
+  (accumulator, product) => accumulator + product.quantity * product.unitPrice,
+  0
+);
+console.log(total);
+
+// Value types and Reference types
+// cart.push({
+//   id: 7,
+//   productName: "Ruhsat Kılıfı",
+//   quantity: 30,
+//   unitPrice: 200,
+// }); // push() ile array'in bellekteki referansı değişmez!!! // Angular ve Vue push() bile yapılsa ekranı yeniliyor ancak React bunu yapmaz, bu noktada React için State Management önemli(birçok bileşeni için böyle ancak her zaman aynı durum geçerli değil)!
+
+// function addToCart(sepet) {
+//   sepet.push({
+//     id: 8,
+//     productName: "Test Cihazı",
+//     quantity: 0,
+//     unitPrice: 0,
+//   });
+// }
+
+// addToCart(cart);
+
+// console.log(cart);
+
+// let number = 10;
+// function sayiTopla(sayi) {
+//   sayi += 1;
+//   // console.log(sayi);
+// }
+
+// sayiTopla(number);
+// console.log(number);
