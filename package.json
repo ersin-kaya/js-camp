@@ -10,8 +10,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "babel": "^6.23.0",
     "es6-module-loader": "^0.17.11",
-    "traceur": "0.0.108"
+    "traceur": "^0.0.108",
+    "typescript": "^5.2.2"
   },
   "devDependencies": {
     "lite-server": "^2.2.0"
