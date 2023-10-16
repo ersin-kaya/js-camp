@@ -2,16 +2,15 @@ import BaseEntity from "./baseEntity.js";
 
 export default class User extends BaseEntity {
   constructor(
+    id,
     createdTime,
     lastUpdatedTime,
-    id,
     firstName,
     lastName,
     city,
     age
   ) {
-    super(createdTime, lastUpdatedTime);
-    this.id = id;
+    super(id, createdTime, lastUpdatedTime);
     this.firstName = firstName;
     this.lastName = lastName;
     this.city = city;

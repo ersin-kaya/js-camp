@@ -2,17 +2,16 @@ import BaseEntity from "./baseEntity.js";
 
 export default class Employee extends BaseEntity {
   constructor(
+    id,
     createdTime,
     lastUpdatedTime,
-    id,
     firstName,
     lastName,
     city,
     age,
     salary
   ) {
-    super(createdTime, lastUpdatedTime);
-    this.id = id;
+    super(id, createdTime, lastUpdatedTime);
     this.firstName = firstName;
     this.lastName = lastName;
     this.city = city;

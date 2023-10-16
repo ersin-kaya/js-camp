@@ -1,5 +1,6 @@
 export default class BaseEntity {
-  constructor(createdTime, lastUpdatedTime) {
+  constructor(id, createdTime, lastUpdatedTime) {
+    this.id = id;
     this.createdTime = createdTime;
     this.lastUpdatedTime = lastUpdatedTime;
   }
