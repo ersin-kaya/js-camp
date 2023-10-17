@@ -1,4 +1,6 @@
 import BusinessRules from "../utilities/business/businessRules.js";
+import SuccessResult from "../utilities/results/successResult.js";
+import ErrorResult from "../utilities/results/errorResult.js";
 
 export default class EntityServiceBase {
   #entities;
@@ -42,7 +44,11 @@ export default class EntityServiceBase {
       //   entity
       // ); //message!
     } else {
-      this.errorHandler.setError(entity, "This entity has no ID.");
+      this.errorHandler.setErrorWithData(
+        result.success,
+        result.message,
+        entity
+      );
     }
   }
 
@@ -65,6 +71,8 @@ export default class EntityServiceBase {
   }
 
   checkId(entity) {
-    return !isNaN(entity.id) ? true : false;
+    return !isNaN(entity.id)
+      ? new SuccessResult()
+      : new ErrorResult("This entity has no ID.");
   }
 }
