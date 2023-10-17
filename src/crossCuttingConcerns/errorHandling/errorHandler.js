@@ -1,3 +1,5 @@
+import ErrorDataResult from "../../utilities/results/errorDataResult.js";
+
 export default class ErrorHandler {
   #errors;
 
@@ -21,7 +23,7 @@ export default class ErrorHandler {
         data === undefined
       )
     ) {
-      this.#errors.push({ success: success, message: message, data: data });
+      this.#errors.push(new ErrorDataResult(message, data));
     }
   }
 
