@@ -1,7 +1,7 @@
 export default class BusinessRules {
   run(...logics) {
     for (const result of logics) {
-      if (!result) {
+      if (!result.success) {
         return result;
       }
     }
