@@ -1,4 +1,6 @@
 import BusinessRules from "../utilities/business/businessRules.js";
+import SuccessDataResult from "../utilities/results/successDataResult.js";
+import ErrorDataResult from "../utilities/results/errorDataResult.js";
 import SuccessResult from "../utilities/results/successResult.js";
 import ErrorResult from "../utilities/results/errorResult.js";
 
@@ -22,11 +24,14 @@ export default class EntityServiceBase {
   }
 
   getAll() {
-    return this.#entities;
+    return new SuccessDataResult(undefined, this.#entities);
   }
 
   getById(id) {
-    return this.#entities.filter((entity) => entity.id === id)[0];
+    return new SuccessDataResult(
+      undefined,
+      this.#entities.filter((entity) => entity.id === id)[0]
+    );
   }
 
   add(entity) {
@@ -55,7 +60,7 @@ export default class EntityServiceBase {
   update(entity) {
     entity.lastUpdatedTime = new Date();
 
-    let oldData = this.getById(entity.id);
+    let oldData = this.getById(entity.id).data;
     const keys = Object.keys(entity);
 
     for (const key of keys) {
@@ -67,7 +72,14 @@ export default class EntityServiceBase {
 
   delete(entity) {
     const index = this.#entities.map((e) => e.id).indexOf(entity.id);
-    return index !== -1 ? this.#entities.splice(index, 1) : -1;
+
+    if (index !== -1) {
+      return new SuccessDataResult(
+        "The record was successfully deleted.",
+        this.#entities.splice(index, 1)
+      );
+    }
+    return new ErrorDataResult("The record could not be deleted.", entity);
   }
 
   checkId(entity) {
