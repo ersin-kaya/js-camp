@@ -41,8 +41,8 @@ export default class EntityServiceBase {
     result = businessRules.run(this.checkId(entity));
 
     if (result === null) {
-      entity.createdTime = new Date();
-      entity.lastUpdatedTime = new Date();
+      entity.createdTime = this.getDate();
+      entity.lastUpdatedTime = this.getDate();
       this.#entities.push(entity);
       // this.loggerService.log(
       //   Object.getPrototypeOf(this.loggerService)["constructor"].name,
@@ -58,7 +58,7 @@ export default class EntityServiceBase {
   }
 
   update(entity) {
-    entity.lastUpdatedTime = new Date();
+    entity.lastUpdatedTime = this.getDate();
 
     let oldData = this.getById(entity.id).data;
     const keys = Object.keys(entity);
@@ -86,5 +86,9 @@ export default class EntityServiceBase {
     return !isNaN(entity.id)
       ? new SuccessResult()
       : new ErrorResult("This entity has no ID.");
+  }
+
+  getDate() {
+    return new Date();
   }
 }
