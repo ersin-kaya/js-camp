@@ -88,6 +88,13 @@ export default class EntityServiceBase {
       : new ErrorResult("This entity has no ID.");
   }
 
+  isThereNoData(value) {
+    if (value) {
+      return new ErrorResult();
+    }
+    return new SuccessResult("No data.");
+  }
+
   isItAnInteger(value) {
     if (!Number.isNaN(Number.parseInt(+value))) {
       return new SuccessResult();
