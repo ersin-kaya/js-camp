@@ -1,6 +1,7 @@
 import BusinessRules from "../utilities/business/businessRules.js";
 import ErrorDataResult from "../utilities/results/errorDataResult.js";
 import ErrorResult from "../utilities/results/errorResult.js";
+import SuccessDataResult from "../utilities/results/successDataResult.js";
 import SuccessResult from "../utilities/results/successResult.js";
 import EntityServiceBase from "./entityServiceBase.js";
 
@@ -9,9 +10,12 @@ export default class CustomerService extends EntityServiceBase {
     super(loggerService, errorHandler);
   }
 
-  add(customer) {
+  add(customer, requiredFields) {
     let businessRules = new BusinessRules();
-    let result = businessRules.run(this.checkAge(customer.age));
+    let result = businessRules.run(
+      this.checkAge(customer.age),
+      this.checkRequiredFields(customer, requiredFields)
+    );
 
     if (result === null) {
       super.add(customer);
@@ -24,6 +28,16 @@ export default class CustomerService extends EntityServiceBase {
     }
   }
 
+  loadData(entities, requiredFields) {
+    if (entities === undefined) {
+      return;
+    } else {
+      for (const entity of entities) {
+        this.add(entity, requiredFields);
+      }
+    }
+  }
+
   checkAge(age) {
     if (this.isItAnInteger(age) && age >= 18 && age <= 65) {
       return new SuccessResult();
@@ -33,23 +47,22 @@ export default class CustomerService extends EntityServiceBase {
 
   checkRequiredFields(customer, requiredFields) {
     let hasErrors = false;
+    let message;
 
     if (requiredFields !== undefined) {
       for (const field of requiredFields.split(",")) {
         if (this.isThereNoData(customer[field]).success) {
           hasErrors = true;
-          this.errorHandler.setErrorWithData(
-            undefined,
-            `Validation problem. ${field} is required.`,
-            customer
-          );
+          message = `Validation problem. ${
+            field.charAt(0).toUpperCase() + field.slice(1)
+          } is required.`;
         }
       }
     }
 
     if (!hasErrors) {
-      return new SuccessResult();
+      return new SuccessDataResult();
     }
-    return new ErrorResult();
+    return new ErrorDataResult(message, customer);
   }
 }
