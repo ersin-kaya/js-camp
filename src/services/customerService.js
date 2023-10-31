@@ -1,3 +1,4 @@
+import Messages from "../constants/messages/messages.js";
 import BusinessRules from "../utilities/business/businessRules.js";
 import ErrorDataResult from "../utilities/results/errorDataResult.js";
 import ErrorResult from "../utilities/results/errorResult.js";
@@ -10,6 +11,10 @@ export default class CustomerService extends EntityServiceBase {
     super(loggerService, errorHandler);
   }
 
+  getAll() {
+    return new SuccessDataResult(Messages.customersListed, super.getAll().data);
+  }
+
   add(customer, requiredFields) {
     let businessRules = new BusinessRules();
     let result = businessRules.run(
@@ -19,12 +24,14 @@ export default class CustomerService extends EntityServiceBase {
 
     if (result === null) {
       super.add(customer);
+      return new SuccessResult("Customer added.");
     } else {
       this.errorHandler.setErrorWithData(
         result.success,
         result.message,
         customer
       );
+      return new ErrorResult();
     }
   }
 
