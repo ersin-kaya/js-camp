@@ -44,6 +44,7 @@ export default class EntityServiceBase {
       entity.createdTime = this.getDate();
       entity.lastUpdatedTime = this.getDate();
       this.#entities.push(entity);
+      return new SuccessResult();
       // this.loggerService.log(
       //   Object.getPrototypeOf(this.loggerService)["constructor"].name,
       //   entity
@@ -54,6 +55,7 @@ export default class EntityServiceBase {
         result.message,
         entity
       );
+      return new ErrorResult();
     }
   }
 
@@ -66,8 +68,10 @@ export default class EntityServiceBase {
     for (const key of keys) {
       if (oldData[key] !== entity[key] && key !== "createdTime") {
         oldData[key] = entity[key]; // reference type
+        return new SuccessResult();
       }
     }
+    return new ErrorResult();
   }
 
   delete(entity) {
