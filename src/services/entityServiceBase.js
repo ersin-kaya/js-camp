@@ -3,14 +3,16 @@ import SuccessDataResult from "../utilities/results/successDataResult.js";
 import ErrorDataResult from "../utilities/results/errorDataResult.js";
 import SuccessResult from "../utilities/results/successResult.js";
 import ErrorResult from "../utilities/results/errorResult.js";
+import MessageBase from "../constants/messages/messageBase.js";
 
 export default class EntityServiceBase {
   #entities;
 
-  constructor(loggerService, errorHandler) {
+  constructor(loggerService, errorHandler, messages) {
     this.#entities = [];
     this.loggerService = loggerService;
     this.errorHandler = errorHandler;
+    this.messages = new MessageBase(messages);
   }
 
   loadData(entities) {
@@ -24,12 +26,15 @@ export default class EntityServiceBase {
   }
 
   getAll() {
-    return new SuccessDataResult(undefined, this.#entities);
+    return new SuccessDataResult(
+      this.messages.successMessageForGetAllMethods,
+      this.#entities
+    );
   }
 
   getById(id) {
     return new SuccessDataResult(
-      undefined,
+      this.messages.successMessageForGetByIdMethods,
       this.#entities.filter((entity) => entity.id === id)[0]
     );
   }
@@ -37,14 +42,13 @@ export default class EntityServiceBase {
   add(entity) {
     const businessRules = new BusinessRules();
     let result;
-
     result = businessRules.run(this.checkId(entity));
 
     if (result === null) {
       entity.createdTime = this.getDate();
       entity.lastUpdatedTime = this.getDate();
       this.#entities.push(entity);
-      return new SuccessResult();
+      return new SuccessResult(this.messages.successMessageForAddMethods);
       // this.loggerService.log(
       //   Object.getPrototypeOf(this.loggerService)["constructor"].name,
       //   entity
@@ -55,7 +59,7 @@ export default class EntityServiceBase {
         result.message,
         entity
       );
-      return new ErrorResult();
+      return new ErrorResult(this.messages.errorMessageForAddMethods);
     }
   }
 
@@ -68,10 +72,10 @@ export default class EntityServiceBase {
     for (const key of keys) {
       if (oldData[key] !== entity[key] && key !== "createdTime") {
         oldData[key] = entity[key]; // reference type
-        return new SuccessResult();
+        return new SuccessResult(this.messages.successMessageForUpdateMethods);
       }
     }
-    return new ErrorResult();
+    return new ErrorResult(this.messages.errorMessageForUpdateMethods);
   }
 
   delete(entity) {
@@ -79,31 +83,34 @@ export default class EntityServiceBase {
 
     if (index !== -1) {
       return new SuccessDataResult(
-        "The record was successfully deleted.",
+        this.messages.successMessageForDeleteMethods,
         this.#entities.splice(index, 1)
       );
     }
-    return new ErrorDataResult("The record could not be deleted.", entity);
+    return new ErrorDataResult(
+      this.messages.errorMessageForDeleteMethods,
+      entity
+    );
   }
 
   checkId(entity) {
     return !isNaN(entity.id)
       ? new SuccessResult()
-      : new ErrorResult("This entity has no ID.");
+      : new ErrorResult(MessageBase.errorMessageEntityHasNoId);
   }
 
   isThereNoData(value) {
     if (value) {
       return new ErrorResult();
     }
-    return new SuccessResult("No data.");
+    return new SuccessResult(MessageBase.successMessageNoData);
   }
 
   isItAnInteger(value) {
     if (!Number.isNaN(Number.parseInt(+value))) {
       return new SuccessResult();
     }
-    return new ErrorResult("This value is not an integer.");
+    return new ErrorResult(MessageBase.errorMessageValueIsNotAnInteger);
   }
 
   getDate() {
