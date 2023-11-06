@@ -1,4 +1,4 @@
-import Messages from "../constants/messages/messages.js";
+import MessagesForCustomersInEnglish from "../constants/messages/messagesForCustomersInEnglish.js";
 import BusinessRules from "../utilities/business/businessRules.js";
 import ErrorDataResult from "../utilities/results/errorDataResult.js";
 import ErrorResult from "../utilities/results/errorResult.js";
@@ -7,12 +7,13 @@ import SuccessResult from "../utilities/results/successResult.js";
 import EntityServiceBase from "./entityServiceBase.js";
 
 export default class CustomerService extends EntityServiceBase {
-  constructor(loggerService, errorHandler) {
-    super(loggerService, errorHandler);
+  constructor(loggerService, errorHandler, messages) {
+    super(loggerService, errorHandler, messages);
   }
 
   getAll() {
-    return new SuccessDataResult(Messages.customersListed, super.getAll().data);
+    let result = super.getAll();
+    return new SuccessDataResult(result.message, result.data);
   }
 
   add(customer, requiredFields) {
@@ -23,15 +24,15 @@ export default class CustomerService extends EntityServiceBase {
     );
 
     if (result === null) {
-      super.add(customer);
-      return new SuccessResult("Customer added.");
+      let resultFromBaseAddMethod = super.add(customer);
+      return new SuccessResult(resultFromBaseAddMethod.message);
     } else {
       this.errorHandler.setErrorWithData(
         result.success,
         result.message,
         customer
       );
-      return new ErrorResult();
+      return new ErrorResult(result.message);
     }
   }
 
@@ -49,7 +50,7 @@ export default class CustomerService extends EntityServiceBase {
     if (this.isItAnInteger(age) && age >= 18 && age <= 65) {
       return new SuccessResult();
     }
-    return new ErrorResult("This value is not an age.");
+    return new ErrorResult(MessagesForCustomersInEnglish.errorMessageNotAnAge);
   }
 
   checkRequiredFields(customer, requiredFields) {
