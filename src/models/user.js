@@ -1,4 +1,4 @@
-import BaseEntity from "./baseEntity.js";
+import BaseEntity from "./base-entity.js";
 
 export default class User extends BaseEntity {
   constructor(

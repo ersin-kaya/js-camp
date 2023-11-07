@@ -1,5 +1,5 @@
 import { users } from "../data/users.js";
-import DataError from "../models/dataError.js";
+import DataError from "../models/data-error.js";
 
 export default class UserService {
   // export: dışarıdan import edilebilir
