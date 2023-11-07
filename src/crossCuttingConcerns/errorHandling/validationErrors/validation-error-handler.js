@@ -1,4 +1,4 @@
-import ErrorHandler from "../errorHandler.js";
+import ErrorHandler from "../error-handler.js";
 
 export default class ValidationErrorHandler extends ErrorHandler {
   // #validationErrors;
