@@ -4,7 +4,7 @@ import ErrorDataResult from "../utilities/results/errorDataResult.js";
 import ErrorResult from "../utilities/results/errorResult.js";
 import SuccessDataResult from "../utilities/results/successDataResult.js";
 import SuccessResult from "../utilities/results/successResult.js";
-import EntityServiceBase from "./entityServiceBase.js";
+import EntityServiceBase from "./entity-service-base.js";
 
 export default class CustomerService extends EntityServiceBase {
   constructor(loggerService, errorHandler, messages) {
