@@ -1,9 +1,9 @@
 import MessagesForCustomersInEnglish from "../constants/messages/messages-for-customers-in-english.js";
-import BusinessRules from "../utilities/business/businessRules.js";
-import ErrorDataResult from "../utilities/results/errorDataResult.js";
-import ErrorResult from "../utilities/results/errorResult.js";
-import SuccessDataResult from "../utilities/results/successDataResult.js";
-import SuccessResult from "../utilities/results/successResult.js";
+import BusinessRules from "../utilities/business/business-rules.js";
+import ErrorDataResult from "../utilities/results/error-data-result.js";
+import ErrorResult from "../utilities/results/error-result.js";
+import SuccessDataResult from "../utilities/results/success-data-result.js";
+import SuccessResult from "../utilities/results/success-result.js";
 import EntityServiceBase from "./entity-service-base.js";
 
 export default class CustomerService extends EntityServiceBase {

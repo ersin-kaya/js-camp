@@ -1,5 +1,5 @@
-import ErrorDataResult from "../../utilities/results/errorDataResult.js";
-import ErrorResult from "../../utilities/results/errorResult.js";
+import ErrorDataResult from "../../utilities/results/error-data-result.js";
+import ErrorResult from "../../utilities/results/error-result.js";
 
 export default class ErrorHandler {
   #errors;

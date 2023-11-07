@@ -1,8 +1,8 @@
-import BusinessRules from "../utilities/business/businessRules.js";
-import SuccessDataResult from "../utilities/results/successDataResult.js";
-import ErrorDataResult from "../utilities/results/errorDataResult.js";
-import SuccessResult from "../utilities/results/successResult.js";
-import ErrorResult from "../utilities/results/errorResult.js";
+import BusinessRules from "../utilities/business/business-rules.js";
+import SuccessDataResult from "../utilities/results/success-data-result.js";
+import ErrorDataResult from "../utilities/results/error-data-result.js";
+import SuccessResult from "../utilities/results/success-result.js";
+import ErrorResult from "../utilities/results/error-result.js";
 import MessageBase from "../constants/messages/message-base.js";
 
 export default class EntityServiceBase {
