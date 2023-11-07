@@ -1,4 +1,4 @@
-import MessagesForCustomersInEnglish from "../constants/messages/messagesForCustomersInEnglish.js";
+import MessagesForCustomersInEnglish from "../constants/messages/messages-for-customers-in-english.js";
 import BusinessRules from "../utilities/business/businessRules.js";
 import ErrorDataResult from "../utilities/results/errorDataResult.js";
 import ErrorResult from "../utilities/results/errorResult.js";
